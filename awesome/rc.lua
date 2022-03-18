@@ -120,7 +120,7 @@ local modkey1      = "Control"
 local browser1          = "firefox"
 local browser2          = "chromium"
 local editor            = os.getenv("EDITOR") or "nano"
-local editorgui         = "atom"
+local editorgui         = "code"
 local filemanager       = "thunar"
 local mediaplayer       = "spotify"
 local terminal          = "alacritty"
@@ -620,7 +620,7 @@ globalkeys = my_table.join(
               {description = "delete tag", group = "tag"}),
 
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
+    awful.key({ modkey}, "Return", function () awful.spawn(terminal) end,
               {description = terminal, group = "super"}),
     awful.key({ modkey, "Shift" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
@@ -744,8 +744,6 @@ globalkeys = my_table.join(
             if beautiful.mpd.timer.started then
                 beautiful.mpd.timer:stop()
                 common.text = common.text .. lain.util.markup.bold("OFF")
-            else
-                beautiful.mpd.timer:start()
                 common.text = common.text .. lain.util.markup.bold("ON")
             end
             naughty.notify(common)
@@ -927,11 +925,8 @@ awful.rules.rules = {
     --{ rule = { class = browser2 },
       --properties = { screen = 1, tag = awful.util.tagnames[1], switchtotag = true  } },
 
-    --{ rule = { class = browser1 },
-      --properties = { screen = 1, tag = awful.util.tagnames[1], switchtotag = true  } },
-
-    --{ rule = { class = "Vivaldi-stable" },
-        --properties = { screen = 1, tag = awful.util.tagnames[1], switchtotag = true } },
+    { rule = { class = browser1 },
+      properties = { screen = 1, tag = awful.util.tagnames[1], switchtotag = true  } },
 
     --{ rule = { class = "Chromium" },
       --properties = { screen = 1, tag = awful.util.tagnames[1], switchtotag = true  } },
@@ -949,8 +944,8 @@ awful.rules.rules = {
     --{ rule = { class = "Brackets" },
         --properties = { screen = 1, tag = awful.util.tagnames[2], switchtotag = true  } },
 
-    --{ rule = { class = "Code" },
-        --properties = { screen = 1, tag = awful.util.tagnames[2], switchtotag = true  } },
+    { rule = { class = "Code" },
+        properties = { screen = 1, tag = awful.util.tagnames[2], switchtotag = true  } },
 
     --    { rule = { class = "Geany" },
          --  properties = { screen = 1, tag = awful.util.tagnames[2], switchtotag = true  } },
@@ -968,6 +963,13 @@ awful.rules.rules = {
     --{ rule = { class = "Meld" },
         --properties = { screen = 1, tag = awful.util.tagnames[5] , switchtotag = true  } },
 
+    -- Set applications to map on screen 2
+      { rule = { class = "discord" },
+          properties = { screen = 2, tag = awful.util.tagnames[1] } },
+	
+      { rule = { class = "spotify" },
+          properties = { screen = 2, tag = awful.util.tagnames[2], switchtotag = true  } },
+
 
     -- Set applications to be maximized at startup.
     -- find class or role via xprop command
@@ -977,43 +979,17 @@ awful.rules.rules = {
 
     { rule = { class = "Geany" },
           properties = { maximized = false, floating = false } },
+    { rule = { class = "discord"},
+    	  properties = { maximezed = false, floating = false } },
 
-    -- { rule = { class = "Thunar" },
-    --     properties = { maximized = false, floating = false } },
-
-    { rule = { class = "Gimp*", role = "gimp-image-window" },
-          properties = { maximized = true } },
+    { rule = { class = "Thunar" },
+         properties = { maximized = false, floating = false } },
 
     { rule = { class = "Gnome-disks" },
           properties = { maximized = true } },
 
-    { rule = { class = "inkscape" },
-          properties = { maximized = true } },
-
     { rule = { class = mediaplayer },
           properties = { maximized = true } },
-
-    { rule = { class = "Vlc" },
-          properties = { maximized = true } },
-
-    { rule = { class = "VirtualBox Manager" },
-          properties = { maximized = true } },
-
-    { rule = { class = "VirtualBox Machine" },
-          properties = { maximized = true } },
-
-    { rule = { class = "Vivaldi-stable" },
-          properties = { maximized = false, floating = false } },
-
-    { rule = { class = "Vivaldi-stable" },
-          properties = { callback = function (c) c.maximized = false end } },
-
-    --IF using Vivaldi snapshot you must comment out the rules above for Vivaldi-stable as they conflict
---    { rule = { class = "Vivaldi-snapshot" },
---          properties = { maximized = false, floating = false } },
-
---    { rule = { class = "Vivaldi-snapshot" },
---          properties = { callback = function (c) c.maximized = false end } },
 
     { rule = { class = "Xfce4-settings-manager" },
           properties = { floating = false } },
