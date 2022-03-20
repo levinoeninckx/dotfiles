@@ -119,7 +119,6 @@ local modkey1      = "Control"
 --change these variables if you want
 local browser1          = "firefox"
 local browser2          = "chromium"
-local editor            = os.getenv("EDITOR") or "nano"
 local editorgui         = "code"
 local filemanager       = "thunar"
 local mediaplayer       = "spotify"
@@ -326,7 +325,7 @@ globalkeys = my_table.join(
         {description = editorgui , group = "function keys" }),
     awful.key({ modkey }, "F3", function () awful.util.spawn( "inkscape" ) end,
         {description = "inkscape" ,group = "function keys" }),
-    awful.key({ modkey }, "F4", function () awful.util.spawn( "gimp" ) end,
+    awful.key({ modkey }, "F4", function () awful.util.spawn( "krita" ) end,
         {description = "gimp" , group = "function keys" }),
     awful.key({ modkey }, "F5", function () awful.util.spawn( "meld" ) end,
         {description = "meld" , group = "function keys" }),
@@ -415,38 +414,8 @@ globalkeys = my_table.join(
     awful.key({ modkey1, altkey   }, "p", function() awful.util.spawn( "pamac-manager" ) end,
         {description = "Pamac Manager", group = "alt+ctrl"}),
 
-    -- alt + ...
-    awful.key({ altkey, "Shift"   }, "t", function () awful.spawn.with_shell( "variety -t  && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&" ) end,
-        {description = "Pywal Wallpaper trash", group = "altkey"}),
-    awful.key({ altkey, "Shift"   }, "n", function () awful.spawn.with_shell( "variety -n  && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&" ) end,
-        {description = "Pywal Wallpaper next", group = "altkey"}),
-    awful.key({ altkey, "Shift"   }, "u", function () awful.spawn.with_shell( "wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&" ) end,
-        {description = "Pywal Wallpaper update", group = "altkey"}),
-    awful.key({ altkey, "Shift"   }, "p", function () awful.spawn.with_shell( "variety -p  && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&" ) end,
-        {description = "Pywal Wallpaper previous", group = "altkey"}),
-    awful.key({ altkey }, "t", function () awful.util.spawn( "variety -t" ) end,
-        {description = "Wallpaper trash", group = "altkey"}),
-    awful.key({ altkey }, "n", function () awful.util.spawn( "variety -n" ) end,
-        {description = "Wallpaper next", group = "altkey"}),
-    awful.key({ altkey }, "p", function () awful.util.spawn( "variety -p" ) end,
-        {description = "Wallpaper previous", group = "altkey"}),
-    awful.key({ altkey }, "f", function () awful.util.spawn( "variety -f" ) end,
-        {description = "Wallpaper favorite", group = "altkey"}),
-    awful.key({ altkey }, "Left", function () awful.util.spawn( "variety -p" ) end,
-        {description = "Wallpaper previous", group = "altkey"}),
-    awful.key({ altkey }, "Right", function () awful.util.spawn( "variety -n" ) end,
-        {description = "Wallpaper next", group = "altkey"}),
-    awful.key({ altkey }, "Up", function () awful.util.spawn( "variety --pause" ) end,
-        {description = "Wallpaper pause", group = "altkey"}),
-    awful.key({ altkey }, "Down", function () awful.util.spawn( "variety --resume" ) end,
-        {description = "Wallpaper resume", group = "altkey"}),
-    awful.key({ altkey }, "F2", function () awful.util.spawn( "xfce4-appfinder --collapsed" ) end,
-        {description = "Xfce appfinder", group = "altkey"}),
-    awful.key({ altkey }, "F3", function () awful.util.spawn( "xfce4-appfinder" ) end,
-        {description = "Xfce appfinder", group = "altkey"}),
-    -- awful.key({ altkey }, "F5", function () awful.spawn.with_shell( "xlunch --config ~/.config/xlunch/default.conf --input ~/.config/xlunch/entries.dsv" ) end,
-    --    {description = "Xlunch app launcher", group = "altkey"}),
 
+    -- Alt+..
     -- screenshots
     awful.key({ }, "Print", function () awful.util.spawn("scrot 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'") end,
         {description = "Scrot", group = "screenshots"}),
@@ -789,7 +758,7 @@ clientkeys = my_table.join(
         {description = "toggle fullscreen", group = "client"}),
     awful.key({ modkey, "Shift"   }, "q",      function (c) c:kill()                         end,
               {description = "close", group = "hotkeys"}),
-    awful.key({ modkey, },           "q",      function (c) c:kill()                         end,
+    awful.key({ modkey, },  	     "q",      function (c) c:kill()                         end,
               {description = "close", group = "hotkeys"}),
     awful.key({ modkey, "Shift" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
@@ -969,6 +938,9 @@ awful.rules.rules = {
 	
       { rule = { class = "spotify" },
           properties = { screen = 2, tag = awful.util.tagnames[2], switchtotag = true  } },
+      
+      { rule = { class = "telegram-desktop" },
+      	  properties = { screen = 1, tag = awful.util.tagnames[4], switchtotag = false } },
 
 
     -- Set applications to be maximized at startup.
@@ -993,6 +965,8 @@ awful.rules.rules = {
 
     { rule = { class = "Xfce4-settings-manager" },
           properties = { floating = false } },
+    { rule = { class = "firefox" },
+    	  properties = { maximazied = false } },
 
     -- Floating clients.
     { rule_any = {

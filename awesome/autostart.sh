@@ -18,7 +18,6 @@ run conky -c $HOME/.config/awesome/system-overview
 feh --bg-fill ~/backgrounds/halleys_comet.jpg
 #set a random background image
 #feh --bg-fil --randomize -r  /usr/share/backgrounds/logicyugi/
-run redshift -l 51.2194475:4.4024643 &
 
 
 #run applications from startup
@@ -28,6 +27,6 @@ run redshift -l 51.2194475:4.4024643 &
 #run insync start
 #run spotify
 #run ckb-next -b
-#run discord
-#run telegram-desktop
+run discord
+run telegram-desktop
 
